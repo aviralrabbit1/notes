@@ -1,8 +1,12 @@
 import { useState } from "react";
 
+interface Note {
+    title: string;
+}
+
 function TODO() {
-    const [title, setTitle] = useState("");
-    const [notes, setNotes] = useState([]);
+    const [title, setTitle] = useState<string>("");
+    const [notes, setNotes] = useState<Note[]>([]);
 
     const addNote = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
