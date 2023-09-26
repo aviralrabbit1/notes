@@ -1,15 +1,10 @@
-import { useState } from 'react';
 import './App.css'
+import TODO from './TODO';
 
 function App() {
-  const [text, settext] = useState("");
   return (
     <div>
-      <h1>
-        TODO app
-      </h1>
-      <input type="text" onChange={(e) => settext(e.target.value)} />
-      <p>{text} </p>
+      <TODO/>
     </div>
   )
 }
