@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Note {
     title: string;
@@ -9,6 +9,17 @@ function TODO() {
     const [title, setTitle] = useState<string>("");
     const [notes, setNotes] = useState<Note[]>([]);
     const [body, setBody] = useState("");
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      console.log("useeffect");
+      document.title = (count>0)?`${count} note(s)`:'TODO app';
+    
+      return () => {
+        console.log('some function in useeffect');
+      }
+    }, [count])
+    
 
     const addNote = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
@@ -16,12 +27,14 @@ function TODO() {
             ...notes,
             { title, body }
         ])
+        setCount(count+1);
         setTitle("");
         setBody("");
     }
-
+    
     const removeNote = (title: string) => {
         setNotes(notes.filter((note) => note.title !== title));
+        if(count>1) setCount(count-1);
     }
 
     return (
