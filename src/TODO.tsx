@@ -8,9 +8,13 @@ function TODO() {
         event.preventDefault();
         setNotes([
             ...notes,
-            {title}
+            { title }
         ])
         setTitle("");
+    }
+
+    const removeNote = (title: string) => {
+        setNotes(notes.filter((note) => note.title !== title));
     }
 
     return (
@@ -21,6 +25,7 @@ function TODO() {
         {notes.map((note) => (
             <div key={note.title}>
                 <h3>{note.title} </h3>
+                <button onClick={() => removeNote(note.title)}>Remove Note</button>
             </div>
         ))}
         <form action="" onSubmit={addNote} >
