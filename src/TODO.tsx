@@ -12,11 +12,11 @@ function TODO() {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-      console.log("useeffect");
       document.title = (count>0)?`${count} note(s)`:'TODO app';
+      // Changing the title to denote the number of notes
     
       return () => {
-        console.log('some function in useeffect');
+        console.log(`${count}`);
       }
     }, [count])
     
@@ -34,7 +34,7 @@ function TODO() {
     
     const removeNote = (title: string) => {
         setNotes(notes.filter((note) => note.title !== title));
-        if(count>1) setCount(count-1);
+        if(count>0) setCount(count-1);
     }
 
     return (
