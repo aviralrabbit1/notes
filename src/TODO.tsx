@@ -7,17 +7,22 @@ interface Note {
 
 function TODO() {
     const [title, setTitle] = useState<string>("");
-    const [notes, setNotes] = useState<Note[]>([]);
     const [body, setBody] = useState("");
     const [count, setCount] = useState(0);
 
+    const notesDataString = localStorage.getItem('notes'); // may return null
+    if(notesDataString !== null){
+        var notesData = JSON.parse(notesDataString);
+    }
+    const [notes, setNotes] = useState<Note[]>(notesData);
+    
     useEffect(() => {
       document.title = (count>0)?`${count} note(s)`:'TODO app';
       // Changing the title to denote the number of notes
-    
-      return () => {
-        console.log(`${count}`);
-      }
+
+      localStorage.setItem('notes', JSON.stringify(notes));
+      console.log(notes);
+      
     }, [count])
     
 
