@@ -12,9 +12,9 @@ function TODO() {
 
     const notesDataString = localStorage.getItem('notes'); // may return null
     if(notesDataString !== null){
-        var notesData = JSON.parse(notesDataString);
+        var notesData = JSON.parse(notesDataString); // var to make it global
     }
-    const [notes, setNotes] = useState<Note[]>(notesData);
+    const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
     
     useEffect(() => {
       document.title = (count>0)?`${count} note(s)`:'TODO app';
@@ -23,7 +23,7 @@ function TODO() {
       localStorage.setItem('notes', JSON.stringify(notes));
       console.log(notes);
       
-    }, [count])
+    }, [count, notes])
     
 
     const addNote = (event: { preventDefault: () => void; }) => {
