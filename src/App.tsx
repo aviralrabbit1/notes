@@ -1,10 +1,11 @@
 import './App.css'
+import TODO from './TODO';
 
 function App() {
   return (
-    <>
-    TODO app
-    </>
+    <div>
+      <TODO/>
+    </div>
   )
 }
 
