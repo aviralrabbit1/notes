@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
-import { notesReducer, Note } from "../reducers/notesReducer";
-import OneNote from './OneNote';
+import { notesReducer } from "../reducers/notesReducer";
+import { NoteList } from "./NoteList";
 
 export default function NotesApp() {
     const [title, setTitle] = useState<string>("");
@@ -61,11 +61,9 @@ export default function NotesApp() {
     return (
       <div>
         <h1>
-          TODO app
+          Notes app
         </h1>
-        {notes.map((note: Note, index: number) => (
-            <OneNote key={index} note={note} removeNote={removeNote} />
-        ))}
+        <NoteList notes={notes} removeNote={removeNote} />
         <p>Add notes here</p>
         <form action="" onSubmit={addNote} >
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />

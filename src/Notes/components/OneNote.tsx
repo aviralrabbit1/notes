@@ -1,6 +1,7 @@
 import { Note } from "../reducers/notesReducer";
 
-const OneNote: React.FC<{ note: Note; removeNote: (title: string) => void }> = ({ note, removeNote }) => {
+const OneNote: React.FC<{ note: Note; removeNote: (title: string) => void }> 
+    = ({ note, removeNote }) => {
     return (
         <div>
             <h3>{note.title} </h3>
@@ -9,5 +10,5 @@ const OneNote: React.FC<{ note: Note; removeNote: (title: string) => void }> = (
         </div>
     )
 }
-
+    
 export { OneNote as default }
