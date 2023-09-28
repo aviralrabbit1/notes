@@ -2,6 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { notesReducer } from "../reducers/notesReducer";
 import { NoteList } from "./NoteList";
 import { AddNote } from './AddNote'
+import NotesContext from '../context/notes-context'
 
 export default function NotesApp() {
 
@@ -40,12 +41,12 @@ export default function NotesApp() {
     }
 
     return (
-      <div>
+      <NotesContext.Provider value={{ notes, dispatch}} >   {/* providing context value to all the children components */}
         <h1>
           Notes app
         </h1>
-        <NoteList notes={notes} removeNote={removeNote} />
+        <NoteList removeNote={removeNote} />
         <AddNote dispatch={dispatch} />
-      </div>
+      </NotesContext.Provider>
     )
 }
