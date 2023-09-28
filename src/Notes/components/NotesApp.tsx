@@ -4,10 +4,8 @@ import { NoteList } from "./NoteList";
 import { AddNote } from './AddNote'
 
 export default function NotesApp() {
-    const [title, setTitle] = useState<string>("");
-    const [body, setBody] = useState("");
-    const [count, setCount] = useState(0);
 
+    const [count, setCount] = useState(0);
     const [notes, dispatch] = useReducer(notesReducer, []);
 
     const notesDataString = localStorage.getItem('notes'); // may return null
@@ -20,7 +18,6 @@ export default function NotesApp() {
             dispatch({ type: 'POPULATE_NOTES', notes: notesData });
         }
     }, [])
-
 
     // const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
     
