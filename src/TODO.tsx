@@ -11,9 +11,8 @@ function TODO() {
     const [count, setCount] = useState(0);
 
     const notesDataString = localStorage.getItem('notes'); // may return null
-    if(notesDataString !== null){
-        var notesData = JSON.parse(notesDataString); // var to make it global
-    }
+    const notesData = notesDataString ? JSON.parse(notesDataString) : [];
+
     const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
     
     useEffect(() => {
@@ -26,7 +25,7 @@ function TODO() {
     }, [count, notes])
     
 
-    const addNote = (event: { preventDefault: () => void; }) => {
+    const addNote = (event: React.FormEvent) => {
         event.preventDefault();
         setNotes([
             ...notes,
@@ -48,11 +47,7 @@ function TODO() {
           TODO app
         </h1>
         {notes.map((note) => (
-            <div key={note.title}>
-                <h3>{note.title} </h3>
-                <p>{note.body} </p>
-                <button onClick={() => removeNote(note.title)}>Remove Note</button>
-            </div>
+            <Note key={note.title} note={note} removeNote={removeNote} />
         ))}
         <p>Add notes here</p>
         <form action="" onSubmit={addNote} >
@@ -62,6 +57,16 @@ function TODO() {
             <h3>{title} </h3>
         </form>
       </div>
+    )
+}
+
+const Note: React.FC<{ note: Note; removeNote: (title: string) => void }> = ({ note, removeNote }) => {
+    return (
+        <div>
+            <h3>{note.title} </h3>
+            <p>{note.body} </p>
+            <button onClick={() => removeNote(note.title)}>Remove Note</button>
+        </div>
     )
 }
 
