@@ -27,4 +27,4 @@ const notesReducer = (state: Note[], action: NotesAction): Note[] => {
 
 export { notesReducer };
 
-export type { Note };
+export type { Note, NotesAction };
