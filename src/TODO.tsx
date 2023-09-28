@@ -1,8 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 interface Note {
     title: string;
     body: string;
+}
+
+type NotesAction =
+    | { type: 'POPULATE_NOTES'; notes: Note[] }
+
+    const notesReducer = (state: Note[], action: NotesAction): Note[] => {
+        switch (action.type) {
+        case 'POPULATE_NOTES':
+            return action.notes            
+            break;
+    
+        default:
+            return state;
+    }
 }
 
 function TODO() {
@@ -10,10 +24,21 @@ function TODO() {
     const [body, setBody] = useState("");
     const [count, setCount] = useState(0);
 
-    const notesDataString = localStorage.getItem('notes'); // may return null
-    const notesData = notesDataString ? JSON.parse(notesDataString) : [];
+    const [notes, dispatch] = useReducer(notesReducer, []);
 
-    const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
+    const notesDataString = localStorage.getItem('notes'); // may return null
+    // const notesData = notesDataString ? JSON.parse(notesDataString) : [];
+
+    useEffect(() => {
+        const notesData = notesDataString ? JSON.parse(notesDataString) : [];
+        
+        if(notesData){
+            dispatch({ type: 'POPULATE_NOTES', notes: notesData });
+        }
+    }, [])
+
+
+    // const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
     
     useEffect(() => {
       document.title = (count>0)?`${count} note(s)`:'TODO app';
@@ -27,17 +52,17 @@ function TODO() {
 
     const addNote = (event: React.FormEvent) => {
         event.preventDefault();
-        setNotes([
-            ...notes,
-            { title, body }
-        ])
+        // setNotes([
+        //     ...notes,
+        //     { title, body }
+        // ])
         setCount(count+1);
         setTitle("");
         setBody("");
     }
     
     const removeNote = (title: string) => {
-        setNotes(notes.filter((note) => note.title !== title));
+        // setNotes(notes.filter((note) => note.title !== title));
         if(count>0) setCount(count-1);
     }
 
@@ -46,8 +71,8 @@ function TODO() {
         <h1>
           TODO app
         </h1>
-        {notes.map((note) => (
-            <Note key={note.title} note={note} removeNote={removeNote} />
+        {notes.map((note: Note, index: number) => (
+            <Note key={index} note={note} removeNote={removeNote} />
         ))}
         <p>Add notes here</p>
         <form action="" onSubmit={addNote} >
