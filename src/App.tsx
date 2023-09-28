@@ -1,10 +1,10 @@
 import './App.css'
-import TODO from './TODO';
+import NotesApp from './Notes/components/NotesApp';
 
 function App() {
   return (
     <div>
-      <TODO/>
+      <NotesApp/>
     </div>
   )
 }

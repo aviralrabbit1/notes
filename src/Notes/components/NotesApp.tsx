@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
-import { notesReducer, Note } from "./Notes/reducers/notes";
+import { notesReducer, Note } from "../reducers/notesReducer";
+import OneNote from './OneNote';
 
-function TODO() {
+export default function NotesApp() {
     const [title, setTitle] = useState<string>("");
     const [body, setBody] = useState("");
     const [count, setCount] = useState(0);
@@ -63,7 +64,7 @@ function TODO() {
           TODO app
         </h1>
         {notes.map((note: Note, index: number) => (
-            <Note key={index} note={note} removeNote={removeNote} />
+            <OneNote key={index} note={note} removeNote={removeNote} />
         ))}
         <p>Add notes here</p>
         <form action="" onSubmit={addNote} >
@@ -75,15 +76,3 @@ function TODO() {
       </div>
     )
 }
-
-const Note: React.FC<{ note: Note; removeNote: (title: string) => void }> = ({ note, removeNote }) => {
-    return (
-        <div>
-            <h3>{note.title} </h3>
-            <p>{note.body} </p>
-            <button onClick={() => removeNote(note.title)}>Remove Note</button>
-        </div>
-    )
-}
-
-export default TODO
