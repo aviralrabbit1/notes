@@ -7,12 +7,20 @@ interface Note {
 
 type NotesAction =
     | { type: 'POPULATE_NOTES'; notes: Note[] }
+    | { type: 'ADD_NOTES'; title: string; body: string }
+    | { type: 'REMOVE_NOTES'; title: string };
 
     const notesReducer = (state: Note[], action: NotesAction): Note[] => {
         switch (action.type) {
         case 'POPULATE_NOTES':
-            return action.notes            
-            break;
+            return action.notes
+        case 'ADD_NOTES':
+            return [ 
+                ...state,
+            { title: action.title, body: action.body}
+            ]
+        case 'REMOVE_NOTES':
+            return state.filter((note) => note.title !== action.title);
     
         default:
             return state;
@@ -56,6 +64,11 @@ function TODO() {
         //     ...notes,
         //     { title, body }
         // ])
+        dispatch({
+            type: 'ADD_NOTES',
+            title,
+            body,
+        })
         setCount(count+1);
         setTitle("");
         setBody("");
@@ -63,6 +76,10 @@ function TODO() {
     
     const removeNote = (title: string) => {
         // setNotes(notes.filter((note) => note.title !== title));
+        dispatch({
+            type: 'REMOVE_NOTES',
+            title,
+        })
         if(count>0) setCount(count-1);
     }
 
