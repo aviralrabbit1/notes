@@ -21,6 +21,7 @@ export const AddNote: React.FC<{ dispatch: React.Dispatch<NotesAction> }> = ({ d
         setTitle("");
         setBody("");
     }
+    
     return (
         <div>
             <p>Add notes here</p>
