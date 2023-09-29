@@ -1,13 +1,10 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { notesReducer } from "../reducers/notesReducer";
 import { NoteList } from "./NoteList";
 import { AddNote } from './AddNote'
+import NotesContext from '../context/notes-context'
 
 export default function NotesApp() {
-    const [title, setTitle] = useState<string>("");
-    const [body, setBody] = useState("");
-    const [count, setCount] = useState(0);
-
     const [notes, dispatch] = useReducer(notesReducer, []);
 
     const notesDataString = localStorage.getItem('notes'); // may return null
@@ -21,34 +18,35 @@ export default function NotesApp() {
         }
     }, [])
 
-
     // const [notes, setNotes] = useState<Note[]>(notesData || []); // localstorage or empty
     
     useEffect(() => {
-      document.title = (count>0)?`${count} note(s)`:'TODO app';
-      // Changing the title to denote the number of notes
-
       localStorage.setItem('notes', JSON.stringify(notes));
       console.log(notes);
-      
-    }, [count, notes])
+
+      const count = notes.length;
+
+      document.title = (count>0)?`${count} note(s)`:'Notes app';
+      // Changing the title to denote the number of notes
+
+    }, [notes])
     
-    const removeNote = (title: string) => {
-        // setNotes(notes.filter((note) => note.title !== title));
-        dispatch({
-            type: 'REMOVE_NOTES',
-            title,
-        })
-        if(count>0) setCount(count-1);
-    }
+    // const removeNote = (title: string) => {
+    //     // setNotes(notes.filter((note) => note.title !== title));
+    //     dispatch({
+    //         type: 'REMOVE_NOTES',
+    //         title,
+    //     })
+    //     if(count>0) setCount(count-1);
+    // }
 
     return (
-      <div>
+      <NotesContext.Provider value={{ notes, dispatch}} >   {/* providing context value to all the children components */}
         <h1>
           Notes app
         </h1>
-        <NoteList notes={notes} removeNote={removeNote} />
+        <NoteList />
         <AddNote dispatch={dispatch} />
-      </div>
+      </NotesContext.Provider>
     )
 }

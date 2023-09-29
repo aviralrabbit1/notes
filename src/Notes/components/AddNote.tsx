@@ -21,8 +21,9 @@ export const AddNote: React.FC<{ dispatch: React.Dispatch<NotesAction> }> = ({ d
         setTitle("");
         setBody("");
     }
+
     return (
-        <div>
+        <>
             <p>Add notes here</p>
             <form action="" onSubmit={addNote} >
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -30,6 +31,6 @@ export const AddNote: React.FC<{ dispatch: React.Dispatch<NotesAction> }> = ({ d
                 <button>Add Note</button>
                 <h3>{title} </h3>
             </form>
-        </div>
+        </>
     )
 }
