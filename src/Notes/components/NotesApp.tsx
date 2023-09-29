@@ -31,21 +31,21 @@ export default function NotesApp() {
       
     }, [count, notes])
     
-    const removeNote = (title: string) => {
-        // setNotes(notes.filter((note) => note.title !== title));
-        dispatch({
-            type: 'REMOVE_NOTES',
-            title,
-        })
-        if(count>0) setCount(count-1);
-    }
+    // const removeNote = (title: string) => {
+    //     // setNotes(notes.filter((note) => note.title !== title));
+    //     dispatch({
+    //         type: 'REMOVE_NOTES',
+    //         title,
+    //     })
+    //     if(count>0) setCount(count-1);
+    // }
 
     return (
       <NotesContext.Provider value={{ notes, dispatch}} >   {/* providing context value to all the children components */}
         <h1>
           Notes app
         </h1>
-        <NoteList removeNote={removeNote} />
+        <NoteList />
         <AddNote dispatch={dispatch} />
       </NotesContext.Provider>
     )
